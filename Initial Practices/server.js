@@ -1,7 +1,20 @@
-// ==> Initialize the NPM by using npm init -y ( will automatically configure ) <<----- through this we get the Package.json file 
-// ==> Install express by using npm i Express
-// ==> What is Transitive dependencies  <<----- Dependency dependent on some other dependency
-// ==> package.json is used to manage the updates of package
+// importing area
+const express = require('express');
+const app = express();
 
-// Problem with Node due to which we move to Express ( framework of Node ) :- Very complex to initialzie
-// :- Routing and middleware makes easy
+// implementation area
+app.get("/", (req, res) => {
+    // res.send("Hello Naman");    // generally we need to send the Status in the reponse along with the response in JSON format
+    res.status(201).json({
+        OutputMessage: "Hello World"
+    })
+});
+
+app.post("/postRequest", (req, res) => {
+    res.status(500).json({
+        email: "xxx@slomins.com"
+    })
+})
+
+// exporting area or Listening area
+app.listen(4000, () => { console.log("Port is running on 4000") });

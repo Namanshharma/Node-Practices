@@ -1,0 +1,13 @@
+// ==> Initialize the NPM by using npm init -y ( will automatically configure ) <<----- through this we get the Package.json file
+// ==> Install express by using npm i Express
+// ==> What is Transitive dependencies  <<----- Dependency dependent on some other dependency
+// ==> package.json is used to manage the updates of package
+
+// Difference between Package and Packagelock.json
+// Package.json ---->> It is used to manages the updates of packages | Minor udpate | Major update
+//              ---->> ^ ( caret ) it is used to update the minor versions
+//              ---->> ~ ( tilde ) used to update the major version of package
+// Package-lock.json ---->> Mainly used to Lock the versions of packages
+
+// Problem with Node due to which we move to Express ( framework of Node ) :- Very complex to initialzie
+// :- Routing and middleware makes easy
