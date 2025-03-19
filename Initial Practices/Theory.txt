@@ -11,3 +11,10 @@
 
 // Problem with Node due to which we move to Express ( framework of Node ) :- Very complex to initialzie
 // :- Routing and middleware makes easy
+
+// Versioning ==> ^4.21.2
+2   --> Minor fixes
+21  --> Recommended bug fix ( security fix )
+4   --> Major release
+^   --> By using caret, Minor nad security fix will update automatically else it will locked if we are not going to use that
+~   --> By using this, only Minor fixes will be update automatically 
