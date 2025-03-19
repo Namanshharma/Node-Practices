@@ -6,10 +6,15 @@ const getRequestOfHomePage = (req, res) => {
 };
 
 const postRequest = (req, res) => {
-    res.status(500).json({
+    res.status(200).json({
         email: "xxx@slomins.com"
+        // email1: req.body.email
     })
 }
 
-module.exports = postRequest;
-module.exports = getRequestOfHomePage;
+// module.exports = getRequestOfHomePage;
+// module.exports = postRequest;
+
+module.exports = {  // module.exports act as object and importing it in     // this is also called as Multiple export
+    getRequestOfHomePage, postRequest
+} 
