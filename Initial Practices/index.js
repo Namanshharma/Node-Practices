@@ -1,8 +1,11 @@
 const http = require('http');
 const fs = require('fs');
+const url = require('url'); // this package is used to handle the Request URL completely with the route parameter, query string parameter.
 
 const app = http.createServer((req, res) => {
-    fs.appendFile('./LogFile.txt', `${Date.now()} : New Request has received at : ${req.url}\n`, () => { })
+    const myUrl = url.parse(req.url, true, true);
+    console.log(myUrl);
+    // fs.appendFile('./LogFile.txt', `${Date.now()} : New Request has received at : ${req.url}\n`, () => { })
     res.end("Hello from Server");
 });
 
