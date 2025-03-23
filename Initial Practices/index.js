@@ -1,10 +1,14 @@
 const express = require('express');
+const bodyParser = require('body-parser')
 const users = require('./MOCK_DATA.json')
+const fs = require('fs');
 
 const app = express();
 const PORT = 4000;
 // in this we will create a hybrid server which means If client sends the request from Browser then we can directly render the 
 // HTML content on the browser else we can send the JSON data to Client
+
+app.use(bodyParser.json()); // Middleware to convert the request body into JSON
 
 app.get('/users', (req, res) => {
     const html = `
@@ -36,19 +40,69 @@ app.get('/api/users', (req, res) => {
 
 // we can merge them together
 
-app.route('/api/users/:id').get((req, res) => {
-    return res.status(200).json(users.find(x => x.id === Number(req.params.id)));
-}).patch((req, res) => {
-    return res.send("pending");
-}).delete((req, res) => {
-    return res.json({
-        message: "Pending"
+app.post('/api/user', (req, res) => {
+    // users.push({
+    //     id: users.length + 1,
+    //     first_name: req.body.first_name,
+    //     last_name: req.body.last_name,
+    //     email: req.body.email,
+    //     gender: req.body.gender,
+    //     phone_number: req.body.phone_number,
+    // })
+    users.push({ ...req.body, id: users.length + 1 });
+    fs.writeFile('./MOCK_DATA.json', JSON.stringify(users), (err, data) => {
+        return res.json({
+            Id: users.length,
+            Message: "User Added Successfully"
+        })
     })
 })
 
-app.post('/api/user', (req, res) => {
-    console.log(req);
-})
+app.route('/api/users/:id')
+    .get((req, res) => {
+        return res.status(200).json(users.find(x => x.id === Number(req.params.id)));
+    })
+    .patch((req, res) => {
+        const foundUser = users.find(x => x.first_name === req.body.first_name);
+        if (foundUser == undefined || foundUser == null) {
+            return res.status(200).json({
+                Message: "User Didn't found"
+            })
+        }
+        console.log(foundUser);
+        foundUser.first_name = req.body.first_name;
+        foundUser.last_name = req.body.last_name;
+        foundUser.email = req.body.email;
+        foundUser.gender = req.body.gender;
+        foundUser.phone_number = req.body.phone_number;
+        console.log(foundUser);
+        return res.json({
+            message: "Pending"
+        })
+    })
+    .delete((req, res) => {
+        const index = users.findIndex(x => x.id === Number(req.params.id));
+        if (index >= 0) {
+            const removedUser = users.splice(index, 1);
+            fs.writeFile('./MOCK_DATA.json', JSON.stringify(users), (err, data) => {
+                return res.status(200).json({
+                    Message: "User Deleted Successfully",
+                    Details: removedUser
+                })
+            })
+        } else {
+            return res.status(200).json({
+                Message: "User already Deleted"
+            })
+        }
+        // users.filter(x => x.id != Number(req.params.id));
+        // fs.writeFile('./MOCK_DATA.json', JSON.stringify(users), (err, data) => {
+        //     return res.json({
+        //         Message: "User Deleted Successfully"
+        //     })
+        // })
+    })
+
 
 
 app.listen(PORT, () => console.log("Server is running on PORT number : " + PORT));
