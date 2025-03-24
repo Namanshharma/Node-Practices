@@ -8,7 +8,19 @@ const PORT = 4000;
 // in this we will create a hybrid server which means If client sends the request from Browser then we can directly render the 
 // HTML content on the browser else we can send the JSON data to Client
 
+// app.use(express.urlencoded({ extended: false }))         // automatically parse the data from www url encoded
+// app.use(express.json());                                 // parse the data into json and then we can access that from Body
 app.use(bodyParser.json()); // Middleware to convert the request body into JSON
+
+app.use((req, res, next) => {
+    console.log("Hello from Custom Middleware 1");  // middleware
+    next();
+});
+
+app.use((req, res, next) => {
+    console.log("Hello from Custom Middleware 2");  // middleware
+    next();
+});
 
 app.get('/users', (req, res) => {
     const html = `
