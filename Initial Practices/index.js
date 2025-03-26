@@ -1,7 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser')
+const mongoose = require('mongoose');
 const users = require('./MOCK_DATA.json')
 const fs = require('fs');
+const { type } = require('os');
 
 const app = express();
 const PORT = 4000;
@@ -11,6 +13,22 @@ const PORT = 4000;
 // app.use(express.urlencoded({ extended: false }))         // automatically parse the data from www url encoded
 // app.use(express.json());                                 // parse the data into json and then we can access that from Body
 app.use(bodyParser.json()); // Middleware to convert the request body into JSON
+
+// build the connection with Mongo
+mongoose.connect('mongodb://127.0.0.1:27017/Initial_Practice')
+
+// Schema of Mongoose
+const userSchema = new mongoose.Schema({
+    first_name: { type: String, required: true },
+    last_name: { type: String },
+    email: { type: String, required: true, unique: true },
+    gender: { type: String },
+    phone_number: { type: String, required: true }
+});
+
+// Now after the schema we need to create a Model
+const User = new mongoose.Model('user', userSchema)
+
 
 app.use((req, res, next) => {
     console.log("Hello from Custom Middleware 1");  // middleware

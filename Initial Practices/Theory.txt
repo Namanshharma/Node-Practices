@@ -18,3 +18,7 @@
 4   --> Major release
 ^   --> By using caret, Minor nad security fix will update automatically else it will locked if we are not going to use that
 ~   --> By using this, only Minor fixes will be update automatically 
+
+
+// How does the Mongoose work
+// --> First we create a Schema and then from Schema we can create a Model and then Based on that Model we will do the CRUD operations
