@@ -8,8 +8,6 @@ const userSchema = new mongoose.Schema({
     phone_number: { type: String, required: true }
 }, { timeStamp: true });
 
-// const User = new mongoose.model("user", userSchema);  
-
 const User = mongoose.model("user", userSchema);
 
 module.exports = User;
