@@ -15,18 +15,21 @@ const generateNewShortUrlHandler = async (req, res) => {
     })
 }
 
-const shortUrlToRedirectUrlHandler = async (req, res) => {
-    if (!req.params.id)
-        return res.status(400).json("Please enter the full URL");
-    const obj = await URL.findOne({ shortId: req.params.id });
-    // return res.status(200).json({
-    //     Message: "Succes",
-    //     Redirect_URL: obj.redirectUrl
-    // })
-    console.log(obj);
-    res.redirect(obj.redirectUrl);
+const getAnalyticsHandler = async (req, res) => {
+    const shortId = req.params.shortId;
+    if (!shortId) {
+        return res.status(400).json({
+            Message: "Please provide the Short Id"
+        })
+    }
+    const obj = await URL.findOne({ shortId });
+    return res.status(200).json({
+        Message: "Success",
+        TotalClicks: obj.visitHistory.length,
+        Analytics: obj.visitHistory
+    })
 }
 
 module.exports = {
-    generateNewShortUrlHandler, shortUrlToRedirectUrlHandler
+    generateNewShortUrlHandler, getAnalyticsHandler
 }
