@@ -18,12 +18,10 @@ connectToMongoDB("mongodb://127.0.0.1:27017/short-url")
 app.set("view engine", "ejs");
 app.set("views", path.resolve("./views"));
 
-app.get('/:id', async (req, res) => {
+app.get('/url/:id', async (req, res) => {
     if (!req.params.id)
         return res.status(400).json("Please enter the full URL");
     const shortId = req.params.id;
-    // const obj = await URL.findOneAndUpdate({ shortId: req.params.id }, { visitHistory });
-    // res.redirect(obj.redirectUrl);  
     const entry = await URL.findOneAndUpdate({ shortId }, { $push: { visitHistory: { timeStamp: Date.now(), } } });
     res.redirect(entry.redirectUrl);
 })
