@@ -3,7 +3,9 @@ const jwt = require('jsonwebtoken');
 const jswtPassword = "12345";
 
 const userExists = (username, password) => {
-
+    // write a logic to return true or false based on the existance of user in AllUser array
+    const found = AllUsers.find(x => x.username === username && x.password === password)
+    return found ? true : false;
 }
 
 const signUpHandler = (req, res) => {
