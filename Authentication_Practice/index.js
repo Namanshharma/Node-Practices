@@ -3,8 +3,8 @@ const authRoutes = require('./Routes/authRoute')
 
 const app = express();
 app.use(express.json());                // this middleware is used to convert the body into json
-app.use(express.urlencoded({ extended: true }));        // this middleware is used 
+app.use(express.urlencoded({ extended: true }));        // this middleware is used
 
 app.use('/', authRoutes)
 
-app.listen(4000);
+app.listen(4000, () => console.log(`Server is running on port 4000`));
