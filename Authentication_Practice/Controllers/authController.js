@@ -52,6 +52,8 @@ const getUserHandler = (req, res) => {
     }
 }
 
+
+
 module.exports = {
     signUpHandler, getUserHandler
 }

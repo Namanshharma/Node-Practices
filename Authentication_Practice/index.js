@@ -1,6 +1,6 @@
 const express = require('express');
 const authRoutes = require('./Routes/authRoute')
-const { connectToMongoDB, createMongoModel } = require('./connect');
+const { connectToMongoDB } = require('./connect');
 
 connectToMongoDB('mongodb://127.0.0.1:27017/Authentication_Practice')
     .then(() => console.log("Mongo DB is connected Successfully"))
