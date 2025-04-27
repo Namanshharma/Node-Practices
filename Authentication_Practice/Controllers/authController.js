@@ -1,13 +1,29 @@
 const AllUsers = require('../users');
 const jwt = require('jsonwebtoken');
 const jwtPassword = "12345";
+const USER = require('../Models/userModel');
 
 const userExists = (username, password) => {
     const found = AllUsers.find(x => x.username === username && x.password === password);
     return found ? true : false;
 }
 
-const signUpHandler = (req, res) => {
+const signUpHandler = async (req, res) => {
+
+    const userExists = await USER.findOne({ email: req.body.email });
+    if (userExists) {
+        return res.status(200).json({
+            Message: "User Already Exists",
+        })
+    }
+    await USER.create({
+        email: req.body.email,
+        name: req.body.username,
+        password: req.body.password
+    }).then(res.status(200).json({
+        Message: "User Successfully Created",
+    }))
+
     const { username, password } = req.body;
     if (!userExists(username, password)) {
         return res.status(403).json({
